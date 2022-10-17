@@ -6,6 +6,8 @@ from ml.data import process_data
 import pickle
 
 # Optional: implement hyperparameter tuning.
+
+
 def train_model(X_train, y_train):
     """
     Trains a machine learning model and returns it.
@@ -25,7 +27,6 @@ def train_model(X_train, y_train):
     rfc = RandomForestClassifier(n_jobs=-1)
 
     return rfc.fit(X_train, y_train)
-
 
 
 def compute_model_metrics(y, preds):
@@ -80,11 +81,10 @@ def compute_model_metrics_by_slice(model, X, cat_features, label, encoder, lb):
     for cat_feature in cat_features:
         for category in X[cat_feature].unique():
 
-
             X_cat = X[X[cat_feature] == category]
 
             x, y, _, _ = process_data(X_cat, categorical_features=cat_features,
-                label=label, training=False, encoder=encoder, lb=lb)
+                                      label=label, training=False, encoder=encoder, lb=lb)
 
             y_preds = inference(model, x)
             precision, recall, fbeta = compute_model_metrics(y, y_preds)
@@ -98,7 +98,6 @@ def compute_model_metrics_by_slice(model, X, cat_features, label, encoder, lb):
             cat_metrics['num_elements'] = len(X_cat)
 
             cat_metrics_list.append(cat_metrics)
-
 
     return cat_metrics_list
 
@@ -134,6 +133,7 @@ def store_model(model, path):
     None
     """
     pickle.dump(model, open(path, 'wb'))
+
 
 def load_model(path):
     """ Load the machine learning model from path

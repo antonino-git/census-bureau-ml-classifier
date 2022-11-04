@@ -149,3 +149,44 @@ def load_model(path):
     """
 
     return pickle.load(open(path, 'rb'))
+
+
+def store_process_data_cfg(encoder, encoder_path, lb, lb_path):
+    """ Store the process data configuration.
+
+    Inputs
+    ------
+    encoder : sklearn.preprocessing._encoders.OneHotEncoder
+        encoder used in the processing of the training data
+    encoder_path: string
+        The location where to store the encoder.
+    lb : sklearn.preprocessing._label.LabelBinarizer
+        Label Binarizer used in the processing of the training data
+    lb_path: string
+        The location where to store the label binarizer.
+    Returns
+    -------
+    None
+    """
+    pickle.dump(encoder, open(encoder_path, 'wb'))
+    pickle.dump(lb, open(lb_path, 'wb'))
+
+
+def load_process_data_cfg(encoder_path, lb_path):
+    """ Load the process data configuration.
+
+    Inputs
+    ------
+    encoder_path: string
+        The location from where to load the encoder.
+    lb_path: string
+        The location from where to load the label binarizer.
+    Returns
+    -------
+    encoder : sklearn.preprocessing._encoders.OneHotEncoder
+        encoder used in the processing of the training data
+    lb : sklearn.preprocessing._label.LabelBinarizer
+        Label Binarizer used in the processing of the training data
+    """
+    return (pickle.load(open(encoder_path, 'rb')),
+            pickle.load(open(lb_path, 'rb')))

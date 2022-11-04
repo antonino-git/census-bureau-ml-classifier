@@ -19,3 +19,8 @@ jobs:
           python-version: 3.8
           cache: 'pip'
       - run: pip install -r requirements.txt
+      
+      - name: Run unit tests for training code
+      - run: |
+              cd starter/model_training
+              python -m pytest test_model.py

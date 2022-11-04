@@ -2,13 +2,15 @@
 
 from sklearn.model_selection import train_test_split
 from ml.data import process_data
-from ml.model import compute_model_metrics_by_slice, train_model, compute_model_metrics, inference, store_model
+from ml.model import compute_model_metrics_by_slice, train_model, compute_model_metrics, inference, store_model, store_process_data_cfg
 
 import pandas as pd
 import csv
 
 INPUT_DATASET_PATH = '../data/census_cleaned.csv'
 MODEL_PATH = '../model/model.pkl'
+ENCODER_PATH = '../model/encoder.pkl'
+LB_PATH = '../model/lb.pkl'
 MODEL_METRICS_REPORT_PATH = '../model/model_metrics.csv'
 
 # Load the input dataset
@@ -38,6 +40,9 @@ model = train_model(X_train, y_train)
 
 # Save model
 store_model(model, MODEL_PATH)
+
+# Store the configuration parameters used for process the training data
+store_process_data_cfg(encoder, ENCODER_PATH, lb, LB_PATH)
 
 # Preprocess test data
 X_test, y_test, _, _ = process_data(

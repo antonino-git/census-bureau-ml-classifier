@@ -30,7 +30,7 @@ def data():
     X_train, y_train, encoder, lb = process_data(
         train, categorical_features=CAT_FEATURES, label="salary", training=True)
 
-    # Preprocess train data
+    # Preprocess test data
     X_test, y_test, encoder, lb = process_data(
         test, categorical_features=CAT_FEATURES, label="salary",
         training=False, encoder=encoder, lb=lb)

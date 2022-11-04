@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 
 from model_training.ml.data import process_data
-from model_training.ml.model import train_model, inference, compute_model_metrics, store_model, load_model
+from model_training.ml.model import train_model, inference, compute_model_metrics, store_model, load_model, store_process_data_cfg, load_process_data_cfg
 
 CAT_FEATURES = [
     "workclass",
@@ -19,6 +19,8 @@ CAT_FEATURES = [
 
 TRAIN_DATA_PATH = "../data/census_cleaned.csv"
 MODEL_PATH = '../model/model.pkl'
+ENCODER_PATH = '../model/encoder.pkl'
+LB_PATH = '../model/lb.pkl'
 
 @pytest.fixture(scope="module")
 def data():
@@ -31,12 +33,12 @@ def data():
         train, categorical_features=CAT_FEATURES, label="salary", training=True)
 
     # Preprocess test data
-    X_test, y_test, encoder, lb = process_data(
+    X_test, y_test, _, _ = process_data(
         test, categorical_features=CAT_FEATURES, label="salary",
         training=False, encoder=encoder, lb=lb)
 
     data = {"X_train":X_train, "y_train":y_train, "X_test":X_test,
-            "y_test":y_test}
+            "y_test":y_test, "encoder":encoder, "lb":lb}
 
     return data
 
@@ -75,3 +77,12 @@ def test_load_store_model(data, model):
 
     assert np.array_equal(y_pred_original, y_pred_loaded)
 
+def test_load_store_process_cfg(data):
+    """ Check that the store_process_data_cfg and load_process_data_cfg work
+        as expected """
+
+    store_process_data_cfg(data['encoder'], ENCODER_PATH, data['lb'], LB_PATH )
+
+    encoder, lb = load_process_data_cfg(ENCODER_PATH, LB_PATH)
+
+    assert type(encoder) == type(data['encoder']) and (type(lb) == type(data['lb']))

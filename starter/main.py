@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 
-from src.ml.model import load_model, load_process_data_cfg, inference
-from src.ml.data import process_data
+from model_training.ml.model import load_model, load_process_data_cfg, inference
+from model_training.ml.data import process_data
 
 import pandas as pd
 

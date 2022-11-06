@@ -3,8 +3,8 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-from model_training.ml.data import process_data
-from model_training.ml.model import train_model, inference, compute_model_metrics, store_model, load_model, store_process_data_cfg, load_process_data_cfg
+from ml.data import process_data
+from ml.model import train_model, inference, compute_model_metrics, store_model, load_model, store_process_data_cfg, load_process_data_cfg
 
 CAT_FEATURES = [
     "workclass",

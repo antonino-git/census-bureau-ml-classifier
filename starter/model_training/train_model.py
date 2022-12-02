@@ -6,13 +6,12 @@ from ml.model import compute_model_metrics_by_slice, train_model
 from ml.model import compute_model_metrics, inference, store_model
 from ml.model import store_process_data_cfg
 import pandas as pd
-import csv
 
 INPUT_DATASET_PATH = '../data/census_cleaned.csv'
 MODEL_PATH = '../model/model.pkl'
 ENCODER_PATH = '../model/encoder.pkl'
 LB_PATH = '../model/lb.pkl'
-MODEL_METRICS_REPORT_PATH = '../model/model_metrics.csv'
+MODEL_METRICS_REPORT_PATH = '../screenshots/slice_output.txt'
 
 # Load the input dataset
 data = pd.read_csv(INPUT_DATASET_PATH)
@@ -70,15 +69,16 @@ cat_metrics_list = compute_model_metrics_by_slice(
     encoder=encoder,
     lb=lb)
 
+
+# Store the model performance by feature
 with open(MODEL_METRICS_REPORT_PATH, "w") as model_report_f:
-    model_report_writer = csv.DictWriter(
-        model_report_f,
-        fieldnames=[
-            'category_feature',
-            "category",
-            "precision",
-            "recall",
-            "fbeta",
-            "num_elements"])
-    model_report_writer.writeheader()
-    model_report_writer.writerows(cat_metrics_list)
+
+    model_report_f.write('Model metrics per slice\n')
+    for cat_metric in cat_metrics_list:
+        model_report_f.write(
+            f"category_feature:{cat_metric['category_feature']} \t"
+            f"category:{cat_metric['category']} \t"
+            f"precision:{cat_metric['precision']} \t"
+            f"recall:{cat_metric['recall']} \t"
+            f"fbeta:{cat_metric['fbeta']} \t"
+            f"num_elements:{cat_metric['num_elements']} \n")

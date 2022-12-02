@@ -26,3 +26,8 @@ jobs:
         run: |
               cd starter/model_training
               python -m pytest test_model.py
+              
+      - name: Run flake8 on training code
+        run: |
+              cd starter/model_training
+              flake8 . 

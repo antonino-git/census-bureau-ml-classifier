@@ -20,7 +20,7 @@ jobs:
           cache: 'pip'
           
       - name: Install python dependecies
-        run: pip install -r starter/requirements.txt
+        run: pip install -r requirements.txt
       
       - name: Run unit tests for training code
         run: |

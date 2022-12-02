@@ -31,7 +31,8 @@ def train_model(X_train, y_train):
 
 def compute_model_metrics(y, preds):
     """
-    Validates the trained machine learning model using precision, recall, and F1.
+    Validates the trained machine learning model using precision, recall,
+    and F1.
 
     Inputs
     ------
@@ -53,8 +54,8 @@ def compute_model_metrics(y, preds):
 
 def compute_model_metrics_by_slice(model, X, cat_features, label, encoder, lb):
     """
-    Validates the trained machine learning model using precision, recall, and F1
-    on test dataset slices.
+    Validates the trained machine learning model using precision, recall, and
+    F1 on test dataset slices.
 
     Inputs
     ------
@@ -84,7 +85,8 @@ def compute_model_metrics_by_slice(model, X, cat_features, label, encoder, lb):
             X_cat = X[X[cat_feature] == category]
 
             x, y, _, _ = process_data(X_cat, categorical_features=cat_features,
-                                      label=label, training=False, encoder=encoder, lb=lb)
+                                      label=label, training=False,
+                                      encoder=encoder, lb=lb)
 
             y_preds = inference(model, x)
             precision, recall, fbeta = compute_model_metrics(y, y_preds)
